@@ -75,8 +75,8 @@ curl -X POST http://localhost:1880/shelly/toggle
 
 ## Related Repositories
 
-- [victron-influxdb](https://github.com/streyda/victron-influxdb) - InfluxDB configuration
-- [victron-grafana](https://github.com/streyda/victron-grafana) - Grafana dashboards
+- [victron-influxdb](https://github.com/lubosstrejcek/victron-influxdb) - InfluxDB configuration
+- [victron-grafana](https://github.com/lubosstrejcek/victron-grafana) - Grafana dashboards
 
 ## License
 
