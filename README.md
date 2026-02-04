@@ -2,7 +2,9 @@
 
 Node-RED flows for monitoring Victron Energy systems via MQTT.
 
-**Created during [Victron Energy Training Center Brno](https://www.victronenergy.com/) - Node-RED Training**
+**Created by Lubos Strejcek during [Victron Energy Training Center Brno](https://www.victronenergy.com/) - Node-RED Training**
+
+> This repository is public and free to use for inspiration or as a starting point for your own Victron monitoring setup.
 
 ## Overview
 
