@@ -8,12 +8,11 @@ Node-RED flows for monitoring Victron Energy systems via MQTT.
 
 ## Overview
 
-Node-RED flows that:
-- Subscribe to Victron MQTT topics from Ekrano GX
-- Parse and validate energy data
-- Write to InfluxDB time-series database
-- Provide HTTP API for Shelly device control
-- Monitor system health and errors
+Node-RED with **flows pre-loaded** (one configuration step needed):
+- All flows ready to use - just configure your Ekrano GX IP address
+- Subscribes to Victron MQTT topics
+- Parses and writes data to InfluxDB
+- Includes Shelly device control API
 
 ## Quick Start
 
@@ -28,24 +27,19 @@ docker compose up -d
 open http://localhost:1880
 ```
 
-## Configuration
+## Configuration (One-Time Setup)
 
-**Important:** You must configure the Ekrano GX IP address for your lab environment.
+**Only step needed:** Set your Ekrano GX IP address.
 
 1. Open Node-RED: http://localhost:1880
-2. Double-click any MQTT node
-3. Edit the MQTT broker settings:
-   - **Server:** Your Ekrano GX IP (e.g., `192.168.51.205`)
-   - **Port:** `1883`
-4. Deploy the flows
+2. Double-click any **MQTT node** (e.g., "Battery SoC")
+3. Click the pencil icon next to the broker
+4. Change **Server** to your Ekrano GX IP (ask your instructor)
+5. Click **Update** → **Deploy**
 
-Each Victron training lab has a different Ekrano GX IP address. Ask your instructor for the correct IP.
+Each Victron training lab has a different Ekrano GX IP address.
 
-| Setting | Value |
-|---------|-------|
-| MQTT Broker | `<your-ekrano-ip>:1883` |
-| Portal ID | Found on GX device (e.g., `c0619ab6d055`) |
-| InfluxDB URL | `http://host.docker.internal:8086` (standalone) |
+> **Note:** InfluxDB connection is pre-configured to `host.docker.internal:8086`
 
 ## Flow Structure
 
