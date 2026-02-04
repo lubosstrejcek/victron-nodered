@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+.npm/
+
+# Credentials (sensitive)
+flows_cred.json
+
+# Config backups
+.config.*.json
+.config.*.json.backup
+.flows.json.backup
+package-lock.json
+
+# OS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/

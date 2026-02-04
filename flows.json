@@ -1,0 +1,2867 @@
+[
+    {
+        "id": "tab-system",
+        "type": "tab",
+        "label": "0. System",
+        "disabled": false,
+        "info": "System keepalive and MQTT connection management"
+    },
+    {
+        "id": "tab-mqtt-input",
+        "type": "tab",
+        "label": "1. MQTT Input",
+        "disabled": false,
+        "info": "Subscribe to Victron MQTT topics"
+    },
+    {
+        "id": "tab-processing",
+        "type": "tab",
+        "label": "2. Processing",
+        "disabled": false,
+        "info": "Parse and transform MQTT data"
+    },
+    {
+        "id": "tab-digital-inputs",
+        "type": "tab",
+        "label": "3. Digital Inputs",
+        "disabled": false,
+        "info": "Door alarm and Bilge pump monitoring"
+    },
+    {
+        "id": "tab-shelly",
+        "type": "tab",
+        "label": "4. Shelly Monitor",
+        "disabled": false,
+        "info": "READ-ONLY Shelly monitoring via Victron MQTT"
+    },
+    {
+        "id": "tab-influxdb",
+        "type": "tab",
+        "label": "5. InfluxDB",
+        "disabled": false,
+        "info": "Write data to InfluxDB"
+    },
+    {
+        "id": "tab-dashboard",
+        "type": "tab",
+        "label": "6. Dashboard",
+        "disabled": false,
+        "info": "Real-time display"
+    },
+    {
+        "id": "tab-errors",
+        "type": "tab",
+        "label": "7. Errors",
+        "disabled": false,
+        "info": "Error handling"
+    },
+    {
+        "id": "config-mqtt-broker",
+        "type": "mqtt-broker",
+        "name": "Ekrano GX",
+        "broker": "192.168.51.205",
+        "port": "1883",
+        "clientid": "nodered-victron-lab",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "config-influxdb",
+        "type": "influxdb",
+        "hostname": "influxdb",
+        "port": "8086",
+        "protocol": "http",
+        "database": "energy",
+        "name": "InfluxDB Victron",
+        "usetls": false,
+        "influxdbVersion": "2.0",
+        "url": "http://influxdb:8086",
+        "rejectUnauthorized": false
+    },
+    {
+        "id": "config-ui-base",
+        "type": "ui-base",
+        "name": "Victron Dashboard",
+        "path": "/dashboard",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "showPageTitle": true,
+        "navigationStyle": "default",
+        "titleBarStyle": "default"
+    },
+    {
+        "id": "config-ui-theme",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094ce",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "config-ui-page",
+        "type": "ui-page",
+        "name": "Overview",
+        "ui": "config-ui-base",
+        "path": "/overview",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "config-ui-theme",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "config-ui-group-power",
+        "type": "ui-group",
+        "name": "Power Flow",
+        "page": "config-ui-page",
+        "width": "6",
+        "height": "1",
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "config-ui-group-battery",
+        "type": "ui-group",
+        "name": "Battery",
+        "page": "config-ui-page",
+        "width": "3",
+        "height": "1",
+        "order": 2,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "config-ui-group-status",
+        "type": "ui-group",
+        "name": "Status",
+        "page": "config-ui-page",
+        "width": "3",
+        "height": "1",
+        "order": 3,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "config-ui-group-environment",
+        "type": "ui-group",
+        "name": "Environment",
+        "page": "config-ui-page",
+        "width": "3",
+        "height": "1",
+        "order": 4,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "config-ui-group-tanks",
+        "type": "ui-group",
+        "name": "Tanks",
+        "page": "config-ui-page",
+        "width": "3",
+        "height": "1",
+        "order": 5,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "n001",
+        "type": "comment",
+        "z": "tab-system",
+        "name": "MQTT Keepalive - Victron requires periodic messages",
+        "info": "Send empty message to R/ topic every 50 seconds to keep connection alive",
+        "x": 240,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "n002",
+        "type": "inject",
+        "z": "tab-system",
+        "name": "Every 50s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "50",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "n003"
+            ]
+        ]
+    },
+    {
+        "id": "n003",
+        "type": "mqtt out",
+        "z": "tab-system",
+        "name": "Keepalive",
+        "topic": "R/c0619ab6d055/keepalive",
+        "qos": "0",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "config-mqtt-broker",
+        "x": 320,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "n004",
+        "type": "comment",
+        "z": "tab-system",
+        "name": "⚠️ READ-ONLY - Never publish to W/ topics!",
+        "info": "Shared lab environment - subscribe only",
+        "x": 210,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "n005",
+        "type": "comment",
+        "z": "tab-system",
+        "name": "── GX Health Monitor ──",
+        "info": "Track Ekrano GX availability",
+        "x": 160,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "n006",
+        "type": "mqtt in",
+        "z": "tab-system",
+        "name": "GX Heartbeat",
+        "topic": "N/c0619ab6d055/heartbeat",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "n008"
+            ]
+        ]
+    },
+    {
+        "id": "n007",
+        "type": "mqtt in",
+        "z": "tab-system",
+        "name": "System Batteries",
+        "topic": "N/c0619ab6d055/system/0/Batteries",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 340,
+        "wires": [
+            [
+                "n008"
+            ]
+        ]
+    },
+    {
+        "id": "n008",
+        "type": "function",
+        "z": "tab-system",
+        "name": "Track GX Health",
+        "func": "try {\n    const now = Date.now();\n    const topic = msg.topic;\n    \n    if (topic.includes('heartbeat')) {\n        flow.set('gx.lastHeartbeat', now);\n        flow.set('gx.online', true);\n    }\n    \n    if (topic.includes('Batteries') && msg.payload.value) {\n        const batteries = msg.payload.value;\n        if (batteries.length > 0) {\n            const bat = batteries[0];\n            flow.set('gx.batteryTemp', bat.temperature);\n            flow.set('gx.batteryState', bat.state);\n        }\n    }\n    \n    // Calculate uptime since last restart\n    const firstSeen = flow.get('gx.firstSeen') || now;\n    if (!flow.get('gx.firstSeen')) flow.set('gx.firstSeen', now);\n    const uptimeSeconds = Math.floor((now - firstSeen) / 1000);\n    \n    msg.measurement = 'gx_health';\n    msg.payload = {\n        online: 1,\n        heartbeat_age_ms: now - (flow.get('gx.lastHeartbeat') || now),\n        battery_temp: flow.get('gx.batteryTemp') || 0,\n        monitor_uptime_s: uptimeSeconds\n    };\n    \n    return msg;\n} catch (e) {\n    node.error('GX Health: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 320,
+        "wires": [
+            [
+                "n009"
+            ]
+        ]
+    },
+    {
+        "id": "n009",
+        "type": "link out",
+        "z": "tab-system",
+        "name": "→ InfluxDB Health",
+        "mode": "link",
+        "links": [
+            "n500"
+        ],
+        "x": 535,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "n010",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "Battery Monitor (BMV-702) - Instance 256",
+        "info": "",
+        "x": 190,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "n011",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Battery SoC",
+        "topic": "N/c0619ab6d055/battery/256/Soc",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "n015"
+            ]
+        ]
+    },
+    {
+        "id": "n012",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Battery Voltage",
+        "topic": "N/c0619ab6d055/battery/256/Dc/0/Voltage",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "n015"
+            ]
+        ]
+    },
+    {
+        "id": "n013",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Battery Current",
+        "topic": "N/c0619ab6d055/battery/256/Dc/0/Current",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 200,
+        "wires": [
+            [
+                "n015"
+            ]
+        ]
+    },
+    {
+        "id": "n014",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Battery Power",
+        "topic": "N/c0619ab6d055/battery/256/Dc/0/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 240,
+        "wires": [
+            [
+                "n015"
+            ]
+        ]
+    },
+    {
+        "id": "n015",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ Battery Data",
+        "mode": "link",
+        "links": [
+            "n100"
+        ],
+        "x": 365,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "n020",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "Solar Charger (MPPT 150/35) - Instance 258",
+        "info": "",
+        "x": 210,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "n021",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Solar Power",
+        "topic": "N/c0619ab6d055/solarcharger/258/Yield/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 360,
+        "wires": [
+            [
+                "n024"
+            ]
+        ]
+    },
+    {
+        "id": "n022",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Solar PV Voltage",
+        "topic": "N/c0619ab6d055/solarcharger/258/Pv/V",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 400,
+        "wires": [
+            [
+                "n024"
+            ]
+        ]
+    },
+    {
+        "id": "n023",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Solar State",
+        "topic": "N/c0619ab6d055/solarcharger/258/State",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "n024"
+            ]
+        ]
+    },
+    {
+        "id": "n024",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ Solar Data",
+        "mode": "link",
+        "links": [
+            "n101"
+        ],
+        "x": 365,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "n025",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "AC PV Inverter - Instance 32",
+        "info": "AC-coupled solar inverter",
+        "x": 170,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "n026",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "AC PV Power",
+        "topic": "N/c0619ab6d055/pvinverter/32/Ac/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "n027"
+            ]
+        ]
+    },
+    {
+        "id": "n027",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ AC PV Data",
+        "mode": "link",
+        "links": [
+            "n112"
+        ],
+        "x": 355,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "n030",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "Grid Meter (3-phase) - Instance 30",
+        "info": "",
+        "x": 180,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "n031",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Grid Total Power",
+        "topic": "N/c0619ab6d055/grid/30/Ac/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 560,
+        "wires": [
+            [
+                "n033"
+            ]
+        ]
+    },
+    {
+        "id": "n032",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Grid L1 Power",
+        "topic": "N/c0619ab6d055/grid/30/Ac/L1/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 600,
+        "wires": [
+            [
+                "n033"
+            ]
+        ]
+    },
+    {
+        "id": "n033",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ Grid Data",
+        "mode": "link",
+        "links": [
+            "n102"
+        ],
+        "x": 355,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "n050",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "RuuviTag Temperature Sensor - Instance 22",
+        "info": "",
+        "x": 210,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "n051",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "RuuviTag Temperature",
+        "topic": "N/c0619ab6d055/temperature/22/Temperature",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 720,
+        "wires": [
+            [
+                "n055"
+            ]
+        ]
+    },
+    {
+        "id": "n052",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "RuuviTag Humidity",
+        "topic": "N/c0619ab6d055/temperature/22/Humidity",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 760,
+        "wires": [
+            [
+                "n055"
+            ]
+        ]
+    },
+    {
+        "id": "n053",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "RuuviTag Pressure",
+        "topic": "N/c0619ab6d055/temperature/22/Pressure",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 800,
+        "wires": [
+            [
+                "n055"
+            ]
+        ]
+    },
+    {
+        "id": "n054",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "RuuviTag Battery",
+        "topic": "N/c0619ab6d055/temperature/22/BatteryVoltage",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 840,
+        "wires": [
+            [
+                "n055"
+            ]
+        ]
+    },
+    {
+        "id": "n055",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ RuuviTag Data",
+        "mode": "link",
+        "links": [
+            "n108"
+        ],
+        "x": 375,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "n060",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "Tank Sensors - Instances 20, 21",
+        "info": "",
+        "x": 180,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "n061",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Tank 1 Level",
+        "topic": "N/c0619ab6d055/tank/20/Level",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 960,
+        "wires": [
+            [
+                "n063"
+            ]
+        ]
+    },
+    {
+        "id": "n062",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Tank 2 Level",
+        "topic": "N/c0619ab6d055/tank/21/Level",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 1000,
+        "wires": [
+            [
+                "n063"
+            ]
+        ]
+    },
+    {
+        "id": "n063",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ Tank Data",
+        "mode": "link",
+        "links": [
+            "n109"
+        ],
+        "x": 355,
+        "y": 980,
+        "wires": []
+    },
+    {
+        "id": "n040",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "Inverter (MultiPlus 48/3000) - Instance 257",
+        "info": "",
+        "x": 210,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "n041",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Inverter State",
+        "topic": "N/c0619ab6d055/vebus/257/State",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 1120,
+        "wires": [
+            [
+                "n043"
+            ]
+        ]
+    },
+    {
+        "id": "n042",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Inverter AC Power",
+        "topic": "N/c0619ab6d055/vebus/257/Ac/Out/L1/P",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 1160,
+        "wires": [
+            [
+                "n043"
+            ]
+        ]
+    },
+    {
+        "id": "n043",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ Inverter Data",
+        "mode": "link",
+        "links": [
+            "n103"
+        ],
+        "x": 365,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "n044",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Inverter SoC",
+        "topic": "N/c0619ab6d055/vebus/257/Soc",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 1200,
+        "wires": [
+            [
+                "n043"
+            ]
+        ]
+    },
+    {
+        "id": "n045",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "Inverter Battery Current",
+        "topic": "N/c0619ab6d055/vebus/257/Dc/0/Current",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 1240,
+        "wires": [
+            [
+                "n043"
+            ]
+        ]
+    },
+    {
+        "id": "n046",
+        "type": "comment",
+        "z": "tab-mqtt-input",
+        "name": "System Totals - Instance 0",
+        "info": "Aggregated system values",
+        "x": 170,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "n047",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "System Solar DC Total",
+        "topic": "N/c0619ab6d055/system/0/Dc/Pv/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 170,
+        "y": 1360,
+        "wires": [
+            [
+                "n048"
+            ]
+        ]
+    },
+    {
+        "id": "n048",
+        "type": "link out",
+        "z": "tab-mqtt-input",
+        "name": "→ System Solar Data",
+        "mode": "link",
+        "links": [
+            "n114"
+        ],
+        "x": 385,
+        "y": 1360,
+        "wires": []
+    },
+    {
+        "id": "n049",
+        "type": "mqtt in",
+        "z": "tab-mqtt-input",
+        "name": "AC Solar L1 Power",
+        "topic": "N/c0619ab6d055/pvinverter/32/Ac/L1/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 160,
+        "y": 580,
+        "wires": [
+            [
+                "n027"
+            ]
+        ]
+    },
+    {
+        "id": "n100",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← Battery Data",
+        "links": [
+            "n015"
+        ],
+        "x": 85,
+        "y": 120,
+        "wires": [
+            [
+                "n104"
+            ]
+        ]
+    },
+    {
+        "id": "n090",
+        "type": "comment",
+        "z": "tab-processing",
+        "name": "Parse Victron JSON: {\"value\": X} → extract value",
+        "info": "",
+        "x": 220,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "n104",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse Battery",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    let metric = 'unknown';\n    if (topic.includes('/Soc')) metric = 'soc';\n    else if (topic.includes('/Voltage')) metric = 'voltage';\n    else if (topic.includes('/Current')) metric = 'current';\n    else if (topic.includes('/Power')) metric = 'power';\n    \n    flow.set('battery.' + metric, value);\n    global.set('mqtt.lastActivity', Date.now());\n    \n    msg.measurement = 'battery';\n    msg.tags = { device: 'bmv702', instance: '256' };\n    msg.payload = {};\n    msg.payload[metric] = value;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Battery: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [
+                "n200",
+                "n300"
+            ]
+        ]
+    },
+    {
+        "id": "n101",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← Solar Data",
+        "links": [
+            "n024"
+        ],
+        "x": 85,
+        "y": 200,
+        "wires": [
+            [
+                "n105"
+            ]
+        ]
+    },
+    {
+        "id": "n105",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse Solar",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    let metric = 'unknown';\n    if (topic.includes('/Power')) metric = 'power';\n    else if (topic.includes('/Pv/V')) metric = 'pv_voltage';\n    else if (topic.includes('/State')) metric = 'state';\n    \n    flow.set('solar.' + metric, value);\n    \n    msg.measurement = 'solar';\n    msg.tags = { device: 'mppt_150_35', instance: '258' };\n    msg.payload = {};\n    msg.payload[metric] = value;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Solar: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 200,
+        "wires": [
+            [
+                "n200",
+                "n301"
+            ]
+        ]
+    },
+    {
+        "id": "n102",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← Grid Data",
+        "links": [
+            "n033"
+        ],
+        "x": 85,
+        "y": 280,
+        "wires": [
+            [
+                "n106"
+            ]
+        ]
+    },
+    {
+        "id": "n106",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse Grid",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    let metric = 'unknown';\n    if (topic.includes('/Ac/Power')) metric = 'power_total';\n    else if (topic.includes('/L1/Power')) metric = 'power_l1';\n    else if (topic.includes('/L2/Power')) metric = 'power_l2';\n    else if (topic.includes('/L3/Power')) metric = 'power_l3';\n    \n    flow.set('grid.' + metric, value);\n    \n    msg.measurement = 'grid';\n    msg.tags = { device: 'grid_meter', instance: '30' };\n    msg.payload = {};\n    msg.payload[metric] = value;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Grid: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 280,
+        "wires": [
+            [
+                "n200",
+                "n302"
+            ]
+        ]
+    },
+    {
+        "id": "n103",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← Inverter Data",
+        "links": [
+            "n043"
+        ],
+        "x": 85,
+        "y": 360,
+        "wires": [
+            [
+                "n107"
+            ]
+        ]
+    },
+    {
+        "id": "n107",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse Inverter",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    let metric = 'unknown';\n    if (topic.includes('/State')) metric = 'state';\n    else if (topic.includes('/Ac/Out')) metric = 'ac_power';\n    else if (topic.includes('/Soc')) metric = 'soc';\n    else if (topic.includes('/Dc/0/Current')) metric = 'battery_current';\n    \n    flow.set('inverter.' + metric, value);\n    global.set('mqtt.lastActivity', Date.now());\n    \n    msg.measurement = 'inverter';\n    msg.tags = { device: 'multiplus_48_3000', instance: '257' };\n    msg.payload = {};\n    msg.payload[metric] = value;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Inverter: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 360,
+        "wires": [
+            [
+                "n200"
+            ]
+        ]
+    },
+    {
+        "id": "n108",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← RuuviTag Data",
+        "links": [
+            "n055"
+        ],
+        "x": 85,
+        "y": 440,
+        "wires": [
+            [
+                "n110"
+            ]
+        ]
+    },
+    {
+        "id": "n110",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse RuuviTag",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    let metric = 'unknown';\n    if (topic.includes('/Temperature')) metric = 'temperature';\n    else if (topic.includes('/Humidity')) metric = 'humidity';\n    else if (topic.includes('/Pressure')) metric = 'pressure';\n    else if (topic.includes('/BatteryVoltage')) metric = 'battery_voltage';\n    \n    flow.set('ruuvi.' + metric, value);\n    \n    msg.measurement = 'ruuvi';\n    msg.tags = { device: 'ruuvitag', instance: '22' };\n    msg.payload = {};\n    msg.payload[metric] = value;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse RuuviTag: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 440,
+        "wires": [
+            [
+                "n200",
+                "n303"
+            ]
+        ]
+    },
+    {
+        "id": "n109",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← Tank Data",
+        "links": [
+            "n063"
+        ],
+        "x": 85,
+        "y": 520,
+        "wires": [
+            [
+                "n111"
+            ]
+        ]
+    },
+    {
+        "id": "n111",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse Tank",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    // Level topic gives 0-100 directly\n    const percentage = Math.round(value);\n    \n    let tankNum = '1';\n    if (topic.includes('/tank/21/')) tankNum = '2';\n    \n    flow.set('tank' + tankNum + '.level', percentage);\n    \n    msg.measurement = 'tank';\n    msg.payload = {};\n    msg.payload['level_' + tankNum] = percentage;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Tank: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 520,
+        "wires": [
+            [
+                "n200",
+                "n304"
+            ]
+        ]
+    },
+    {
+        "id": "n112",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← AC PV Data",
+        "links": [
+            "n027"
+        ],
+        "x": 85,
+        "y": 600,
+        "wires": [
+            [
+                "n113"
+            ]
+        ]
+    },
+    {
+        "id": "n113",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse AC PV",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    let metric = 'power';\n    if (topic.includes('/L1/Power')) metric = 'power_l1';\n    else if (topic.includes('/L2/Power')) metric = 'power_l2';\n    else if (topic.includes('/L3/Power')) metric = 'power_l3';\n    else if (topic.includes('/Ac/Power')) metric = 'power';\n    \n    flow.set('acpv.' + metric, value);\n    \n    // Calculate total solar (DC MPPT + AC PV) when total power received\n    if (metric === 'power') {\n        const dcPower = flow.get('solar.power') || 0;\n        const totalSolar = dcPower + value;\n        flow.set('solar.total', totalSolar);\n    }\n    \n    msg.measurement = 'pvinverter';\n    msg.payload = {};\n    msg.payload[metric] = value;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse AC PV: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 600,
+        "wires": [
+            [
+                "n200",
+                "n301"
+            ]
+        ]
+    },
+    {
+        "id": "n114",
+        "type": "link in",
+        "z": "tab-processing",
+        "name": "← System Solar Data",
+        "links": [
+            "n048"
+        ],
+        "x": 95,
+        "y": 680,
+        "wires": [
+            [
+                "n115"
+            ]
+        ]
+    },
+    {
+        "id": "n115",
+        "type": "function",
+        "z": "tab-processing",
+        "name": "Parse System Solar",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const value = msg.payload.value;\n    \n    flow.set('system.solar_dc_total', value);\n    global.set('mqtt.lastActivity', Date.now());\n    \n    msg.measurement = 'system';\n    msg.tags = { device: 'ekrano_gx' };\n    msg.payload = { solar_dc_total: value };\n    \n    return msg;\n} catch (e) {\n    node.error('Parse System Solar: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 680,
+        "wires": [
+            [
+                "n200"
+            ]
+        ]
+    },
+    {
+        "id": "n200",
+        "type": "link out",
+        "z": "tab-processing",
+        "name": "→ InfluxDB",
+        "mode": "link",
+        "links": [
+            "n500"
+        ],
+        "x": 455,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "n300",
+        "type": "link out",
+        "z": "tab-processing",
+        "name": "→ Dashboard Battery",
+        "mode": "link",
+        "links": [
+            "n600"
+        ],
+        "x": 455,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "n301",
+        "type": "link out",
+        "z": "tab-processing",
+        "name": "→ Dashboard Solar",
+        "mode": "link",
+        "links": [
+            "n610"
+        ],
+        "x": 455,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "n302",
+        "type": "link out",
+        "z": "tab-processing",
+        "name": "→ Dashboard Grid",
+        "mode": "link",
+        "links": [
+            "n620"
+        ],
+        "x": 455,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "n303",
+        "type": "link out",
+        "z": "tab-processing",
+        "name": "→ Dashboard RuuviTag",
+        "mode": "link",
+        "links": [
+            "n660"
+        ],
+        "x": 455,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "n304",
+        "type": "link out",
+        "z": "tab-processing",
+        "name": "→ Dashboard Tank",
+        "mode": "link",
+        "links": [
+            "n670"
+        ],
+        "x": 455,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d001",
+        "type": "comment",
+        "z": "tab-digital-inputs",
+        "name": "Digital Inputs - Door (6=Open,7=Closed) - Pump (2=Off,3=On)",
+        "info": "",
+        "x": 250,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "d002",
+        "type": "mqtt in",
+        "z": "tab-digital-inputs",
+        "name": "Door Alarm State",
+        "topic": "N/c0619ab6d055/digitalinput/1/State",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 140,
+        "wires": [
+            [
+                "d003"
+            ]
+        ]
+    },
+    {
+        "id": "d003",
+        "type": "function",
+        "z": "tab-digital-inputs",
+        "name": "Parse Switch 1 + Timer",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const stateCode = msg.payload.value;\n    const now = Date.now();\n    let isOpen = stateCode === 6;\n    let doorState = isOpen ? 'open' : (stateCode === 7 ? 'closed' : 'unknown');\n    \n    const wasOpen = flow.get('door.isOpen') || false;\n    const startTime = flow.get('door.startTime') || 0;\n    let runtime = flow.get('door.runtime') || 0;\n    \n    if (isOpen && !wasOpen) {\n        flow.set('door.startTime', now);\n    } else if (!isOpen && wasOpen && startTime > 0) {\n        runtime += (now - startTime) / 1000;\n        flow.set('door.runtime', runtime);\n        flow.set('door.startTime', 0);\n    }\n    \n    let currentRuntime = runtime;\n    if (isOpen && startTime > 0) {\n        currentRuntime = runtime + (now - startTime) / 1000;\n    }\n    \n    flow.set('door.state', doorState);\n    flow.set('door.isOpen', isOpen);\n    flow.set('door.currentRuntime', currentRuntime);\n    \n    msg.measurement = 'digitalinput';\n    msg.payload = { door_state_code: stateCode, door_is_open: isOpen, door_runtime_seconds: currentRuntime };\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Door: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 140,
+        "wires": [
+            [
+                "d010",
+                "d020"
+            ]
+        ]
+    },
+    {
+        "id": "d004",
+        "type": "mqtt in",
+        "z": "tab-digital-inputs",
+        "name": "Bilge Pump State",
+        "topic": "N/c0619ab6d055/digitalinput/2/State",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 240,
+        "wires": [
+            [
+                "d005"
+            ]
+        ]
+    },
+    {
+        "id": "d005",
+        "type": "function",
+        "z": "tab-digital-inputs",
+        "name": "Parse Pump State + Timer",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const stateCode = msg.payload.value;\n    const now = Date.now();\n    let isOn = stateCode === 3;\n    let pumpState = isOn ? 'on' : (stateCode === 2 ? 'off' : 'unknown');\n    \n    const wasOn = flow.get('pump.isOn') || false;\n    const startTime = flow.get('pump.startTime') || 0;\n    let runtime = flow.get('pump.runtime') || 0;\n    \n    if (isOn && !wasOn) {\n        flow.set('pump.startTime', now);\n    } else if (!isOn && wasOn && startTime > 0) {\n        runtime += (now - startTime) / 1000;\n        flow.set('pump.runtime', runtime);\n        flow.set('pump.startTime', 0);\n    }\n    \n    let currentRuntime = runtime;\n    if (isOn && startTime > 0) {\n        currentRuntime = runtime + (now - startTime) / 1000;\n    }\n    \n    flow.set('pump.state', pumpState);\n    flow.set('pump.isOn', isOn);\n    flow.set('pump.currentRuntime', currentRuntime);\n    \n    msg.measurement = 'digitalinput';\n    msg.payload = { pump_state_code: stateCode, pump_is_on: isOn, pump_runtime_seconds: currentRuntime };\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Pump: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 240,
+        "wires": [
+            [
+                "d010",
+                "d021"
+            ]
+        ]
+    },
+    {
+        "id": "d010",
+        "type": "link out",
+        "z": "tab-digital-inputs",
+        "name": "→ InfluxDB",
+        "mode": "link",
+        "links": [
+            "n500"
+        ],
+        "x": 595,
+        "y": 190,
+        "wires": []
+    },
+    {
+        "id": "d020",
+        "type": "link out",
+        "z": "tab-digital-inputs",
+        "name": "→ Dashboard Door",
+        "mode": "link",
+        "links": [
+            "n630"
+        ],
+        "x": 595,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "d021",
+        "type": "link out",
+        "z": "tab-digital-inputs",
+        "name": "→ Dashboard Pump",
+        "mode": "link",
+        "links": [
+            "n640"
+        ],
+        "x": 595,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "s001",
+        "type": "comment",
+        "z": "tab-shelly",
+        "name": "Shelly Plug S G3 - Monitor + Control",
+        "info": "MAC: 8CBFEA969598, IP: 192.168.51.15\nMonitor via Victron MQTT acload/50\nControl via HTTP API",
+        "x": 190,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "s002",
+        "type": "mqtt in",
+        "z": "tab-shelly",
+        "name": "Shelly Power",
+        "topic": "N/c0619ab6d055/acload/50/Ac/L1/Power",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 140,
+        "wires": [
+            [
+                "s006"
+            ]
+        ]
+    },
+    {
+        "id": "s003",
+        "type": "mqtt in",
+        "z": "tab-shelly",
+        "name": "Shelly Output State",
+        "topic": "N/c0619ab6d055/acload/50/SwitchableOutput/0/State",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "s006"
+            ]
+        ]
+    },
+    {
+        "id": "s004",
+        "type": "mqtt in",
+        "z": "tab-shelly",
+        "name": "Shelly Energy",
+        "topic": "N/c0619ab6d055/acload/50/Ac/Energy/Forward",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 220,
+        "wires": [
+            [
+                "s006"
+            ]
+        ]
+    },
+    {
+        "id": "s005",
+        "type": "mqtt in",
+        "z": "tab-shelly",
+        "name": "Shelly Connected",
+        "topic": "N/c0619ab6d055/acload/50/Connected",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "config-mqtt-broker",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 150,
+        "y": 260,
+        "wires": [
+            [
+                "s006"
+            ]
+        ]
+    },
+    {
+        "id": "s006",
+        "type": "function",
+        "z": "tab-shelly",
+        "name": "Parse Shelly (Read-Only)",
+        "func": "try {\n    if (!msg.payload || msg.payload.value === undefined) {\n        return null;\n    }\n\n    const topic = msg.topic;\n    const value = msg.payload.value;\n    \n    let metric = 'unknown';\n    if (topic.includes('/Power')) metric = 'power';\n    else if (topic.includes('/State')) metric = 'output_state';\n    else if (topic.includes('/Energy/Forward')) metric = 'energy_total';\n    else if (topic.includes('/Connected')) metric = 'connected';\n    \n    flow.set('shelly.' + metric, value);\n    \n    msg.measurement = 'shelly';\n    msg.tags = { device: 'plug_s_g3', mac: '8CBFEA969598', instance: '50' };\n    msg.payload = {};\n    msg.payload[metric] = value;\n    \n    return msg;\n} catch (e) {\n    node.error('Parse Shelly: ' + e.message, msg);\n    return null;\n}",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 200,
+        "wires": [
+            [
+                "s010",
+                "s020"
+            ]
+        ]
+    },
+    {
+        "id": "s010",
+        "type": "link out",
+        "z": "tab-shelly",
+        "name": "→ InfluxDB",
+        "mode": "link",
+        "links": [
+            "n500"
+        ],
+        "x": 575,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "s020",
+        "type": "link out",
+        "z": "tab-shelly",
+        "name": "→ Dashboard Shelly",
+        "mode": "link",
+        "links": [
+            "n650"
+        ],
+        "x": 575,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "s030",
+        "type": "comment",
+        "z": "tab-shelly",
+        "name": "── Shelly Control API ──",
+        "info": "HTTP endpoints for Grafana control",
+        "x": 160,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "s031",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "GET /shelly/on",
+        "url": "/shelly/on",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 360,
+        "wires": [
+            [
+                "s035"
+            ]
+        ]
+    },
+    {
+        "id": "s031b",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "POST /shelly/on",
+        "url": "/shelly/on",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 380,
+        "wires": [
+            [
+                "s035"
+            ]
+        ]
+    },
+    {
+        "id": "s032",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "GET /shelly/off",
+        "url": "/shelly/off",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 400,
+        "wires": [
+            [
+                "s035"
+            ]
+        ]
+    },
+    {
+        "id": "s032b",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "POST /shelly/off",
+        "url": "/shelly/off",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 420,
+        "wires": [
+            [
+                "s035"
+            ]
+        ]
+    },
+    {
+        "id": "s033",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "GET /shelly/toggle",
+        "url": "/shelly/toggle",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 440,
+        "wires": [
+            [
+                "s035"
+            ]
+        ]
+    },
+    {
+        "id": "s033b",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "POST /shelly/toggle",
+        "url": "/shelly/toggle",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "s035"
+            ]
+        ]
+    },
+    {
+        "id": "s034",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "GET /shelly/status",
+        "url": "/shelly/status",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 500,
+        "wires": [
+            [
+                "s036"
+            ]
+        ]
+    },
+    {
+        "id": "s040",
+        "type": "http in",
+        "z": "tab-shelly",
+        "name": "OPTIONS /shelly/*",
+        "url": "/shelly/:action",
+        "method": "options",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 540,
+        "wires": [
+            [
+                "s041"
+            ]
+        ]
+    },
+    {
+        "id": "s041",
+        "type": "function",
+        "z": "tab-shelly",
+        "name": "CORS Preflight",
+        "func": "msg.headers = {\n    'Access-Control-Allow-Origin': '*',\n    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',\n    'Access-Control-Allow-Headers': 'Content-Type'\n};\nmsg.payload = '';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 540,
+        "wires": [
+            [
+                "s042"
+            ]
+        ]
+    },
+    {
+        "id": "s042",
+        "type": "http response",
+        "z": "tab-shelly",
+        "name": "CORS Response",
+        "statusCode": "204",
+        "headers": {},
+        "x": 540,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "s035",
+        "type": "function",
+        "z": "tab-shelly",
+        "name": "Build Shelly Command",
+        "func": "const url = msg.req.url;\nlet action = 'toggle';\n\nif (url.includes('/on')) action = 'on';\nelse if (url.includes('/off')) action = 'off';\nelse if (url.includes('/toggle')) action = 'toggle';\n\nmsg.url = 'http://192.168.51.15/relay/0?turn=' + action;\nmsg.method = 'GET';\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 420,
+        "wires": [
+            [
+                "s037"
+            ]
+        ]
+    },
+    {
+        "id": "s036",
+        "type": "function",
+        "z": "tab-shelly",
+        "name": "Build Status Request",
+        "func": "msg.url = 'http://192.168.51.15/relay/0';\nmsg.method = 'GET';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 500,
+        "wires": [
+            [
+                "s037"
+            ]
+        ]
+    },
+    {
+        "id": "s037",
+        "type": "http request",
+        "z": "tab-shelly",
+        "name": "Call Shelly API",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 560,
+        "y": 460,
+        "wires": [
+            [
+                "s038"
+            ]
+        ]
+    },
+    {
+        "id": "s038",
+        "type": "function",
+        "z": "tab-shelly",
+        "name": "Format Response",
+        "func": "const shellyResponse = msg.payload;\n\nmsg.payload = {\n    success: true,\n    ison: shellyResponse.ison,\n    power: shellyResponse.apower || 0,\n    source: shellyResponse.source || 'unknown'\n};\n\nmsg.headers = {\n    'Access-Control-Allow-Origin': '*',\n    'Content-Type': 'application/json'\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 460,
+        "wires": [
+            [
+                "s039"
+            ]
+        ]
+    },
+    {
+        "id": "s039",
+        "type": "http response",
+        "z": "tab-shelly",
+        "name": "HTTP Response",
+        "statusCode": "200",
+        "headers": {},
+        "x": 900,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "i001",
+        "type": "comment",
+        "z": "tab-influxdb",
+        "name": "InfluxDB 2.x - Org: victron, Bucket: energy, Token: victron-lab-token",
+        "info": "All measurements written here.\nRetention: 7 days",
+        "x": 270,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "n500",
+        "type": "link in",
+        "z": "tab-influxdb",
+        "name": "← All Measurements",
+        "links": [
+            "n200",
+            "d010",
+            "s010"
+        ],
+        "x": 115,
+        "y": 140,
+        "wires": [
+            [
+                "i002"
+            ]
+        ]
+    },
+    {
+        "id": "i004",
+        "type": "comment",
+        "z": "tab-influxdb",
+        "name": "Measurements: battery, solar, grid, inverter, digitalinput, shelly, ruuvi, tank",
+        "info": "",
+        "x": 280,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "i002",
+        "type": "influxdb out",
+        "z": "tab-influxdb",
+        "influxdb": "config-influxdb",
+        "name": "Write to InfluxDB",
+        "measurement": "",
+        "precision": "",
+        "retentionPolicy": "",
+        "database": "",
+        "precisionV18FluxV20": "ms",
+        "retentionPolicyV18Flux": "",
+        "org": "victron",
+        "bucket": "energy",
+        "x": 330,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "i003",
+        "type": "debug",
+        "z": "tab-influxdb",
+        "name": "InfluxDB Debug",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 340,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "db001",
+        "type": "comment",
+        "z": "tab-dashboard",
+        "name": "Dashboard Widgets - Real-time display",
+        "info": "",
+        "x": 190,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "n600",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← Battery Data",
+        "links": [
+            "n300"
+        ],
+        "x": 85,
+        "y": 140,
+        "wires": [
+            [
+                "db010"
+            ]
+        ]
+    },
+    {
+        "id": "db010",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format Battery",
+        "func": "const soc = flow.get('battery.soc') || 0;\nconst voltage = flow.get('battery.voltage') || 0;\n\nmsg.payload = soc + '% | ' + voltage.toFixed(1) + 'V';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 140,
+        "wires": [
+            [
+                "db011"
+            ]
+        ]
+    },
+    {
+        "id": "db011",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-battery",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "name": "Battery Status",
+        "label": "Battery",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#00aa00",
+        "className": "",
+        "x": 480,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "n610",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← Solar Data",
+        "links": [
+            "n301"
+        ],
+        "x": 85,
+        "y": 220,
+        "wires": [
+            [
+                "db020"
+            ]
+        ]
+    },
+    {
+        "id": "db020",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format Solar",
+        "func": "const dcPower = flow.get('solar.power') || 0;\nconst acPower = flow.get('acpv.power') || 0;\nconst total = dcPower + acPower;\n\nmsg.payload = Math.round(total) + 'W (DC:' + Math.round(dcPower) + ' AC:' + Math.round(acPower) + ')';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 220,
+        "wires": [
+            [
+                "db021"
+            ]
+        ]
+    },
+    {
+        "id": "db021",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-power",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "name": "Solar Power",
+        "label": "Solar",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#ffaa00",
+        "className": "",
+        "x": 470,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "n620",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← Grid Data",
+        "links": [
+            "n302"
+        ],
+        "x": 85,
+        "y": 300,
+        "wires": [
+            [
+                "db030"
+            ]
+        ]
+    },
+    {
+        "id": "db030",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format Grid",
+        "func": "const power = flow.get('grid.power_total') || 0;\nconst dir = power > 0 ? 'Import' : (power < 0 ? 'Export' : 'Idle');\n\nmsg.payload = Math.round(Math.abs(power)) + 'W (' + dir + ')';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 300,
+        "wires": [
+            [
+                "db031"
+            ]
+        ]
+    },
+    {
+        "id": "db031",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-power",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "name": "Grid Power",
+        "label": "Grid",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#0066cc",
+        "className": "",
+        "x": 470,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "n630",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← Door Data",
+        "links": [
+            "d020"
+        ],
+        "x": 85,
+        "y": 400,
+        "wires": [
+            [
+                "db040"
+            ]
+        ]
+    },
+    {
+        "id": "db040",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format Door",
+        "func": "const state = flow.get('door.state') || 'unknown';\n\nmsg.payload = state.toUpperCase();\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 400,
+        "wires": [
+            [
+                "db041"
+            ]
+        ]
+    },
+    {
+        "id": "db041",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-status",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "name": "Door Status",
+        "label": "Door",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#666666",
+        "className": "",
+        "x": 470,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "n640",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← Pump Data",
+        "links": [
+            "d021"
+        ],
+        "x": 85,
+        "y": 480,
+        "wires": [
+            [
+                "db050"
+            ]
+        ]
+    },
+    {
+        "id": "db050",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format Pump",
+        "func": "const state = flow.get('pump.state') || 'unknown';\nconst runtime = flow.get('pump.currentRuntime') || 0;\nconst mins = Math.floor(runtime / 60);\nconst secs = Math.floor(runtime % 60);\n\nmsg.payload = state.toUpperCase() + ' (' + mins + ':' + String(secs).padStart(2, '0') + ')';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "db051"
+            ]
+        ]
+    },
+    {
+        "id": "db051",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-status",
+        "order": 2,
+        "width": "3",
+        "height": "1",
+        "name": "Pump Status",
+        "label": "Pump",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#666666",
+        "className": "",
+        "x": 480,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "n650",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← Shelly Data",
+        "links": [
+            "s020"
+        ],
+        "x": 85,
+        "y": 560,
+        "wires": [
+            [
+                "db060"
+            ]
+        ]
+    },
+    {
+        "id": "db060",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format Shelly",
+        "func": "const power = flow.get('shelly.power') || 0;\nconst state = flow.get('shelly.output_state') || 0;\n\nmsg.payload = (state ? 'ON' : 'OFF') + ' | ' + Math.round(power) + 'W';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 560,
+        "wires": [
+            [
+                "db061"
+            ]
+        ]
+    },
+    {
+        "id": "db061",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-status",
+        "order": 3,
+        "width": "3",
+        "height": "1",
+        "name": "Shelly Status",
+        "label": "Shelly Plug",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#666666",
+        "className": "",
+        "x": 480,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "n660",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← RuuviTag Data",
+        "links": [
+            "n303"
+        ],
+        "x": 85,
+        "y": 640,
+        "wires": [
+            [
+                "db070"
+            ]
+        ]
+    },
+    {
+        "id": "db070",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format RuuviTag",
+        "func": "const temp = flow.get('ruuvi.temperature') || 0;\nconst humidity = flow.get('ruuvi.humidity') || 0;\n\nmsg.payload = temp.toFixed(1) + '°C | ' + Math.round(humidity) + '%';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 640,
+        "wires": [
+            [
+                "db071"
+            ]
+        ]
+    },
+    {
+        "id": "db071",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-environment",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "name": "RuuviTag Status",
+        "label": "RuuviTag",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#9933cc",
+        "className": "",
+        "x": 490,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "n670",
+        "type": "link in",
+        "z": "tab-dashboard",
+        "name": "← Tank Data",
+        "links": [
+            "n304"
+        ],
+        "x": 85,
+        "y": 720,
+        "wires": [
+            [
+                "db080"
+            ]
+        ]
+    },
+    {
+        "id": "db080",
+        "type": "function",
+        "z": "tab-dashboard",
+        "name": "Format Tanks",
+        "func": "const tank1 = flow.get('tank1.level') || 0;\nconst tank2 = flow.get('tank2.level') || 0;\n\nmsg.payload = 'T1: ' + tank1 + '% | T2: ' + tank2 + '%';\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 720,
+        "wires": [
+            [
+                "db081"
+            ]
+        ]
+    },
+    {
+        "id": "db081",
+        "type": "ui-text",
+        "z": "tab-dashboard",
+        "group": "config-ui-group-tanks",
+        "order": 1,
+        "width": "3",
+        "height": "1",
+        "name": "Tank Levels",
+        "label": "Tanks",
+        "format": "{{msg.payload}}",
+        "font": "",
+        "fontSize": "16",
+        "color": "#0099cc",
+        "className": "",
+        "x": 470,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "e001",
+        "type": "comment",
+        "z": "tab-errors",
+        "name": "Error Handling - Catch all flow errors",
+        "info": "Catches errors from all nodes.\nNote: MQTT disconnections don't trigger catch - use Status node",
+        "x": 180,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "e002",
+        "type": "catch",
+        "z": "tab-errors",
+        "name": "Catch All",
+        "scope": null,
+        "uncaught": false,
+        "x": 120,
+        "y": 140,
+        "wires": [
+            [
+                "e003"
+            ]
+        ]
+    },
+    {
+        "id": "e003",
+        "type": "function",
+        "z": "tab-errors",
+        "name": "Format Error + Count",
+        "func": "const source = msg.error.source || {};\nconst sourceName = source.name || 'unknown';\nconst sourceType = source.type || 'unknown';\nconst sourceId = source.id || 'unknown';\nconst loopCount = source.count || 0;\nconst message = msg.error.message || 'No message';\n\nlet errorCount = flow.get('errorCount') || 0;\nerrorCount++;\nflow.set('errorCount', errorCount);\n\nconst errorInfo = {\n    timestamp: new Date().toISOString(),\n    source_name: sourceName,\n    source_type: sourceType,\n    source_id: sourceId,\n    loop_count: loopCount,\n    message: message,\n    total_errors: errorCount\n};\n\nif (loopCount > 5) {\n    node.warn('Possible error loop in ' + sourceName + ' (count: ' + loopCount + ')');\n}\n\nnode.warn('Error in ' + sourceName + ' [' + sourceType + ']: ' + message);\n\nlet debugMsg = { payload: errorInfo };\n\nlet influxMsg = {\n    measurement: 'nodered_errors',\n    payload: { error_count: 1, loop_count: loopCount },\n    tags: { source: sourceName, type: sourceType }\n};\n\nreturn [debugMsg, influxMsg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "e004"
+            ],
+            [
+                "e005"
+            ]
+        ]
+    },
+    {
+        "id": "e005",
+        "type": "link out",
+        "z": "tab-errors",
+        "name": "→ InfluxDB Errors",
+        "mode": "link",
+        "links": [
+            "n500"
+        ],
+        "x": 535,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e004",
+        "type": "debug",
+        "z": "tab-errors",
+        "name": "Error Log",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 490,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e010",
+        "type": "comment",
+        "z": "tab-errors",
+        "name": "── MQTT Connection Monitor ──",
+        "info": "Status node detects MQTT disconnections which don't trigger Catch nodes",
+        "x": 190,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "e011",
+        "type": "status",
+        "z": "tab-errors",
+        "name": "MQTT Status",
+        "scope": [
+            "n011",
+            "n006"
+        ],
+        "x": 130,
+        "y": 300,
+        "wires": [
+            [
+                "e012"
+            ]
+        ]
+    },
+    {
+        "id": "e012",
+        "type": "function",
+        "z": "tab-errors",
+        "name": "Parse Connection Status",
+        "func": "const status = msg.status || {};\nconst text = status.text || '';\nconst fill = status.fill || 'grey';\n\nlet connected = 0;\nlet state = 'unknown';\n\nif (text.includes('connected') || fill === 'green') {\n    connected = 1;\n    state = 'connected';\n} else if (text.includes('disconnected') || text.includes('connection lost') || fill === 'red') {\n    connected = 0;\n    state = 'disconnected';\n    node.warn('MQTT broker disconnected!');\n} else if (text.includes('connecting') || fill === 'yellow') {\n    connected = 0;\n    state = 'connecting';\n}\n\nconst wasConnected = flow.get('mqtt.connected');\nif (wasConnected === 1 && connected === 0) {\n    let disconnectCount = flow.get('mqtt.disconnectCount') || 0;\n    disconnectCount++;\n    flow.set('mqtt.disconnectCount', disconnectCount);\n}\n\nflow.set('mqtt.connected', connected);\nflow.set('mqtt.state', state);\nflow.set('mqtt.lastUpdate', Date.now());\n\nmsg.measurement = 'mqtt_status';\nmsg.payload = {\n    connected: connected,\n    disconnect_count: flow.get('mqtt.disconnectCount') || 0\n};\nmsg.tags = { broker: 'ekrano_gx' };\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 300,
+        "wires": [
+            [
+                "e013",
+                "e014"
+            ]
+        ]
+    },
+    {
+        "id": "e013",
+        "type": "link out",
+        "z": "tab-errors",
+        "name": "→ InfluxDB Status",
+        "mode": "link",
+        "links": [
+            "n500"
+        ],
+        "x": 535,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "e014",
+        "type": "debug",
+        "z": "tab-errors",
+        "name": "MQTT Status Log",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 550,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "e020",
+        "type": "comment",
+        "z": "tab-errors",
+        "name": "── Stale Data Detector ──",
+        "info": "Detect if data stops flowing (GX offline but MQTT connected)",
+        "x": 170,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "e021",
+        "type": "inject",
+        "z": "tab-errors",
+        "name": "Every 60s",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "30",
+        "topic": "",
+        "payload": "check",
+        "payloadType": "str",
+        "x": 130,
+        "y": 460,
+        "wires": [
+            [
+                "e022"
+            ]
+        ]
+    },
+    {
+        "id": "e022",
+        "type": "function",
+        "z": "tab-errors",
+        "name": "Check Health + MQTT",
+        "func": "const now = Date.now();\nconst staleThreshold = 120000; // 2 minutes\nconst offlineThreshold = 60000; // 1 minute\n\n// Get last MQTT activity from global context (set by Parse Battery)\nconst lastActivity = global.get('mqtt.lastActivity') || 0;\n\n// Calculate age only if we have valid data\nlet activityAge = 0;\nif (lastActivity > 0) {\n    activityAge = now - lastActivity;\n}\n\n// Determine if data is stale\nlet isStale = 0;\nif (lastActivity > 0 && activityAge > staleThreshold) {\n    isStale = 1;\n    node.warn('GX data stale - no activity for ' + Math.round(activityAge/1000) + 's');\n}\n\n// Determine MQTT connection status based on activity\nlet mqttConnected = 0;\nlet disconnectCount = global.get('mqtt.disconnectCount') || 0;\nconst wasConnected = global.get('mqtt.connected') || 0;\n\nif (lastActivity > 0 && activityAge < offlineThreshold) {\n    mqttConnected = 1;\n} else if (lastActivity === 0) {\n    // No data received yet - assume disconnected\n    mqttConnected = 0;\n}\n\n// Track disconnections\nif (wasConnected === 1 && mqttConnected === 0) {\n    disconnectCount++;\n    global.set('mqtt.disconnectCount', disconnectCount);\n    node.warn('MQTT disconnected - no data for ' + Math.round(activityAge/1000) + 's');\n}\nglobal.set('mqtt.connected', mqttConnected);\n\n// Send freshness message\nmsg.measurement = 'data_freshness';\nmsg.payload = {\n    is_stale: isStale,\n    activity_age_s: Math.round(activityAge / 1000)\n};\n\n// Clone for mqtt_status\nlet mqttMsg = {\n    measurement: 'mqtt_status',\n    payload: {\n        connected: mqttConnected,\n        disconnect_count: disconnectCount\n    }\n};\n\nreturn [msg, mqttMsg];",
+        "outputs": 2,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 460,
+        "wires": [
+            [
+                "e023"
+            ],
+            [
+                "e023"
+            ]
+        ]
+    },
+    {
+        "id": "e023",
+        "type": "link out",
+        "z": "tab-errors",
+        "name": "→ InfluxDB Health",
+        "mode": "link",
+        "links": [
+            "n500"
+        ],
+        "x": 535,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "e030",
+        "type": "comment",
+        "z": "tab-errors",
+        "name": "── Test Error Generator ──",
+        "info": "Click inject to generate test errors for debugging",
+        "x": 180,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "e031",
+        "type": "inject",
+        "z": "tab-errors",
+        "name": "Generate Test Error",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "test",
+        "payloadType": "str",
+        "x": 170,
+        "y": 600,
+        "wires": [
+            [
+                "e032"
+            ]
+        ]
+    },
+    {
+        "id": "e032",
+        "type": "function",
+        "z": "tab-errors",
+        "name": "Throw Random Error",
+        "func": "const errorTypes = [\n    'Connection timeout',\n    'Invalid data format',\n    'Value out of range',\n    'Parse error',\n    'Device not responding'\n];\n\nconst randomError = errorTypes[Math.floor(Math.random() * errorTypes.length)];\nnode.error('TEST: ' + randomError, msg);\n\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 600,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e033",
+        "type": "inject",
+        "z": "tab-errors",
+        "name": "Generate 5 Errors",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "5",
+        "payloadType": "num",
+        "x": 160,
+        "y": 660,
+        "wires": [
+            [
+                "e034"
+            ]
+        ]
+    },
+    {
+        "id": "e034",
+        "type": "function",
+        "z": "tab-errors",
+        "name": "Multi Error Generator",
+        "func": "const errorTypes = [\n    { type: 'mqtt in', name: 'Battery SoC', msg: 'Connection lost' },\n    { type: 'function', name: 'Parse Solar', msg: 'Invalid value: undefined' },\n    { type: 'influxdb out', name: 'Write to InfluxDB', msg: 'Write failed: timeout' },\n    { type: 'http request', name: 'Call Shelly API', msg: 'ECONNREFUSED' },\n    { type: 'mqtt in', name: 'Grid Total Power', msg: 'Subscription error' }\n];\n\nconst count = parseInt(msg.payload) || 1;\n\nfor (let i = 0; i < count; i++) {\n    const err = errorTypes[i % errorTypes.length];\n    node.error('TEST ' + err.type + ': ' + err.msg, msg);\n}\n\nnode.warn('Generated ' + count + ' test errors');\nreturn null;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e040",
+        "type": "comment",
+        "z": "tab-errors",
+        "name": "── Grafana Alert Receiver ──",
+        "info": "Receives alerts from Grafana webhook",
+        "x": 180,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "e041",
+        "type": "http in",
+        "z": "tab-errors",
+        "name": "Grafana Alert",
+        "url": "/grafana-alert",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "e042"
+            ]
+        ]
+    },
+    {
+        "id": "e042",
+        "type": "function",
+        "z": "tab-errors",
+        "name": "Log Alert",
+        "func": "const alert = msg.payload;\nconst status = alert.status || 'unknown';\nconst alerts = alert.alerts || [];\n\nlet count = global.get('grafana.alertCount') || 0;\ncount++;\nglobal.set('grafana.alertCount', count);\nglobal.set('grafana.lastAlert', Date.now());\n\nfor (const a of alerts) {\n    const name = a.labels?.alertname || 'Unknown';\n    const severity = a.labels?.severity || 'info';\n    const summary = a.annotations?.summary || '';\n    \n    node.warn('GRAFANA ALERT [' + severity.toUpperCase() + ']: ' + name + ' - ' + summary);\n}\n\nmsg.payload = { received: true, count: alerts.length };\nmsg.statusCode = 200;\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 780,
+        "wires": [
+            [
+                "e043",
+                "e044"
+            ]
+        ]
+    },
+    {
+        "id": "e043",
+        "type": "http response",
+        "z": "tab-errors",
+        "name": "OK",
+        "statusCode": "200",
+        "headers": {},
+        "x": 510,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "e044",
+        "type": "debug",
+        "z": "tab-errors",
+        "name": "Alert Log",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 510,
+        "y": 820,
+        "wires": []
+    }
+]
