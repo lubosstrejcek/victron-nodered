@@ -18,15 +18,34 @@ Node-RED flows that:
 ## Quick Start
 
 ```bash
-# Run with Docker
-docker run -d --name victron-nodered \
-  -p 1880:1880 \
-  -v $(pwd):/data \
-  nodered/node-red:latest
+# Clone and run
+git clone https://github.com/lubosstrejcek/victron-nodered.git
+cd victron-nodered
+cp .env.example .env
+docker compose up -d
 
 # Access UI
 open http://localhost:1880
 ```
+
+## Configuration
+
+**Important:** You must configure the Ekrano GX IP address for your lab environment.
+
+1. Open Node-RED: http://localhost:1880
+2. Double-click any MQTT node
+3. Edit the MQTT broker settings:
+   - **Server:** Your Ekrano GX IP (e.g., `192.168.51.205`)
+   - **Port:** `1883`
+4. Deploy the flows
+
+Each Victron training lab has a different Ekrano GX IP address. Ask your instructor for the correct IP.
+
+| Setting | Value |
+|---------|-------|
+| MQTT Broker | `<your-ekrano-ip>:1883` |
+| Portal ID | Found on GX device (e.g., `c0619ab6d055`) |
+| InfluxDB URL | `http://host.docker.internal:8086` (standalone) |
 
 ## Flow Structure
 
