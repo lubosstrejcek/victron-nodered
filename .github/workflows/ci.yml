@@ -1,0 +1,87 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '24'
+
+      # settings.js is plain CommonJS loaded by Node-RED at startup.
+      # A syntax error here means the container never comes up.
+      - name: Check settings.js syntax
+        run: node --check settings.js
+
+      # A corrupt or hand-edited flows.json is the most likely breakage
+      # in this repo: Node-RED silently refuses to load the flow.
+      - name: Validate package.json and Node-RED flows
+        run: |
+          node - <<'JS'
+          const fs = require('fs');
+          let failed = false;
+          const fail = (m) => { console.error('FAIL: ' + m); failed = true; };
+
+          try {
+            JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            console.log('ok  package.json is valid JSON');
+          } catch (e) {
+            fail('package.json is not valid JSON: ' + e.message);
+          }
+
+          let flows = null;
+          try {
+            flows = JSON.parse(fs.readFileSync('flows.json', 'utf8'));
+            console.log('ok  flows.json is valid JSON');
+          } catch (e) {
+            fail('flows.json is not valid JSON: ' + e.message);
+          }
+
+          if (flows !== null) {
+            if (!Array.isArray(flows)) {
+              fail('flows.json must be a top-level array of nodes');
+            } else {
+              const ids = new Set();
+              flows.forEach((n, i) => {
+                if (n === null || typeof n !== 'object' || Array.isArray(n)) {
+                  return fail('flows.json[' + i + '] is not an object');
+                }
+                if (typeof n.id !== 'string' || !n.id) fail('flows.json[' + i + '] has no string "id"');
+                if (typeof n.type !== 'string' || !n.type) fail('flows.json[' + i + '] (id=' + n.id + ') has no string "type"');
+                if (typeof n.id === 'string') {
+                  if (ids.has(n.id)) fail('flows.json has duplicate node id "' + n.id + '"');
+                  ids.add(n.id);
+                }
+              });
+
+              for (const n of flows) {
+                if (!Array.isArray(n.wires)) continue;
+                for (const port of n.wires) {
+                  if (!Array.isArray(port)) { fail('node ' + n.id + ' has a malformed wires entry'); continue; }
+                  for (const target of port) {
+                    if (!ids.has(target)) fail('node ' + n.id + ' (' + n.type + ') wires to missing node "' + target + '"');
+                  }
+                }
+              }
+
+              if (!failed) console.log('ok  flows.json: ' + flows.length + ' nodes, ids unique, no dangling wires');
+            }
+          }
+
+          process.exit(failed ? 1 : 0);
+          JS
+
+      # `config` is offline parsing + interpolation; it needs no daemon.
+      - name: Validate docker-compose.yml
+        run: docker compose config --quiet
